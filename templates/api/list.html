@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<title>tOdO</title>
+
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+	<link href="https://fonts.googleapis.com/css?family=Montserrat&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="{% static 'style.css' %}">
+	<link rel="stylesheet" href="{% static 'list.css' %}">
+
+</head>
+<body>
+	  <div class="container">
+        <div class="card-wrap">
+            <div class="card border-0 shadow card--welcome is-show" id="welcome">
+									<h4><a href="{% url 'logout' %}" style='margin-left: 10px;'>Logout</a></h4>
+                    <div class="card-body">
+
+                        <h2><b>{{account.first_name}}'s Tasks</b></h2>
+                        <br>
+                        <br>
+                        <ul>
+                            {% for task in tasks %}
+                            <li>
+                                <h2>{{task.title}}</h2>
+                                <form action="/delete-task/{{task.pk}}/" method="POST">
+                                    {% csrf_token %}
+                                    <input type="submit" class="delete-button" value="Delete">
+                                </form>
+                            </li>
+                            {% endfor %}
+														<br>
+														<br>
+                            <button class='add-task'><a href="{% url 'api:add-task' %}">Add Task</a></button>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+
+</html>
